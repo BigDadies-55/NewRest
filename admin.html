@@ -2,70 +2,80 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>ניהול תפריט - גרסה מלאה</title>
+    <title>ניהול תפריט מלא - כולל תמונות</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; padding: 20px; direction: rtl; }
-        .admin-card { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h2 { border-bottom: 2px solid #3498db; padding-bottom: 10px; color: #2c3e50; }
+        .admin-card { max-width: 750px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #3498db; padding-bottom: 10px; color: #2c3e50; margin-top: 0; }
         
-        .file-ops { background: #ebf5fb; padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #d6eaf8; }
+        .file-ops { background: #ebf5fb; padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #d6eaf8; font-size: 0.9em; }
         
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 10px; }
+        .full-width { grid-column: span 2; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
         input, select, button { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
         
-        .btn-add { background: #27ae60; color: white; border: none; cursor: pointer; font-size: 1.1em; }
-        .btn-update { background: #2980b9; color: white; display: none; } /* יופיע רק בעריכה */
-        .btn-cancel { background: #95a5a6; color: white; display: none; margin-top: 5px; }
+        .btn-primary { background: #27ae60; color: white; border: none; cursor: pointer; font-size: 1.1em; font-weight: bold; }
+        .btn-update { background: #2980b9; display: none; }
+        .btn-cancel { background: #95a5a6; display: none; margin-top: 8px; }
         
-        .item-list { margin-top: 30px; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fff; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; transition: 0.2s; }
-        .item-row:hover { background: #f9f9f9; }
-        .actions { display: flex; gap: 10px; }
-        .edit-btn { background: #f39c12; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
-        .del-btn { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .item-row { display: flex; align-items: center; padding: 15px; background: #fff; border: 1px solid #eee; margin-bottom: 10px; border-radius: 10px; }
+        .item-img-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-left: 15px; background: #eee; }
+        .item-info { flex-grow: 1; }
+        .actions { display: flex; gap: 8px; }
+        .btn-sm { width: auto; padding: 6px 12px; font-size: 0.85em; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-edit { background: #f39c12; }
+        .btn-del { background: #e74c3c; }
     </style>
 </head>
 <body>
 
 <div class="admin-card">
-    <h2>🛠️ לוח ניהול תפריט</h2>
+    <h2>🛠️ ניהול תפריט ותמונות</h2>
     
     <div class="file-ops">
-        <strong>ניהול קובץ נתונים (JSON):</strong>
-        <input type="file" id="fileInput" accept=".json" style="margin: 10px 0; border: none;">
-        <button onclick="saveToFile()" style="background: #34495e; color: white; padding: 8px; width: auto;">💾 שמור גיבוי למחשב</button>
+        <strong>📂 גיבוי ושחזור קובץ (JSON):</strong><br>
+        <input type="file" id="fileInput" accept=".json" style="margin: 10px 0;">
+        <button onclick="saveToFile()" style="background: #34495e; color: white; padding: 6px 12px; width: auto; cursor:pointer;">💾 שמור בסיס נתונים למחשב</button>
     </div>
 
     <div id="editor-form">
         <input type="hidden" id="editId">
         
-        <div class="form-group">
-            <label>שם המנה:</label>
-            <input type="text" id="itemName" placeholder="למשל: סלט קיסר">
-        </div>
-        
-        <div class="form-group">
-            <label>מחיר (₪):</label>
-            <input type="number" id="itemPrice" placeholder="0.00">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>שם המנה:</label>
+                <input type="text" id="itemName" placeholder="למשל: המבורגר הבית">
+            </div>
+            <div class="form-group">
+                <label>מחיר (₪):</label>
+                <input type="number" id="itemPrice" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>קטגוריה:</label>
+                <select id="itemCategory">
+                    <option value="ראשונות">ראשונות</option>
+                    <option value="עיקריות">עיקריות</option>
+                    <option value="קינוחים">קינוחים</option>
+                    <option value="שתייה">שתייה</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>קישור לתמונה (URL):</label>
+                <input type="text" id="itemImage" placeholder="https://example.com/image.jpg">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>קטגוריה (תת-תפריט):</label>
-            <select id="itemCategory">
-                <option value="ראשונות">ראשונות</option>
-                <option value="עיקריות">עיקריות</option>
-                <option value="קינוחים">קינוחים</option>
-                <option value="שתייה">שתייה</option>
-            </select>
-        </div>
-
-        <button id="addBtn" onclick="addItem()" class="btn-add">➕ הוסף מנה לתפריט</button>
-        <button id="updateBtn" onclick="updateItem()" class="btn-add btn-update">💾 שמור שינויים</button>
-        <button id="cancelBtn" onclick="resetForm()" class="btn-cancel">ביטול עריכה</button>
+        <button id="addBtn" onclick="addItem()" class="btn-primary">➕ הוסף מנה חדשה</button>
+        <button id="updateBtn" onclick="updateItem()" class="btn-primary btn-update">💾 שמור שינויים במנה</button>
+        <button id="cancelBtn" onclick="resetForm()" class="btn-sm btn-cancel">ביטול עריכה</button>
     </div>
 
-    <div class="item-list" id="adminList"></div>
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+    <div id="adminList"></div>
 </div>
 
 <script>
@@ -74,19 +84,20 @@
     function render() {
         const list = document.getElementById('adminList');
         if (menuItems.length === 0) {
-            list.innerHTML = "<p style='text-align:center;'>התפריט ריק כרגע.</p>";
+            list.innerHTML = "<p style='text-align:center; color:#888;'>התפריט ריק. הוסף מנה או טען קובץ גיבוי.</p>";
             return;
         }
 
         list.innerHTML = "<h3>מנות קיימות:</h3>" + menuItems.map(item => `
             <div class="item-row">
-                <div>
+                <img src="${item.image || 'https://via.placeholder.com/60'}" class="item-img-preview">
+                <div class="item-info">
                     <strong>${item.name}</strong> <br>
                     <small>${item.category} | ₪${item.price}</small>
                 </div>
                 <div class="actions">
-                    <button class="edit-btn" onclick="startEdit(${item.id})">ערוך</button>
-                    <button class="del-btn" onclick="deleteItem(${item.id})">מחק</button>
+                    <button class="btn-sm btn-edit" onclick="startEdit(${item.id})">ערוך</button>
+                    <button class="btn-sm btn-del" onclick="deleteItem(${item.id})">מחק</button>
                 </div>
             </div>
         `).join('');
@@ -94,28 +105,19 @@
         localStorage.setItem('restaurantMenu', JSON.stringify(menuItems));
     }
 
-    // הוספה
     function addItem() {
         const name = document.getElementById('itemName').value;
         const price = document.getElementById('itemPrice').value;
         const category = document.getElementById('itemCategory').value;
+        const image = document.getElementById('itemImage').value;
 
-        if(!name || !price) return alert("מלא שם ומחיר");
+        if(!name || !price) return alert("חובה למלא שם ומחיר");
 
-        menuItems.push({ id: Date.now(), name, price, category });
+        menuItems.push({ id: Date.now(), name, price, category, image });
         resetForm();
         render();
     }
 
-    // מחיקה
-    function deleteItem(id) {
-        if(confirm("למחוק את המנה?")) {
-            menuItems = menuItems.filter(i => i.id !== id);
-            render();
-        }
-    }
-
-    // --- מצב עריכה ---
     function startEdit(id) {
         const item = menuItems.find(i => i.id === id);
         if(!item) return;
@@ -124,11 +126,11 @@
         document.getElementById('itemName').value = item.name;
         document.getElementById('itemPrice').value = item.price;
         document.getElementById('itemCategory').value = item.category;
+        document.getElementById('itemImage').value = item.image || '';
 
         document.getElementById('addBtn').style.display = 'none';
         document.getElementById('updateBtn').style.display = 'block';
         document.getElementById('cancelBtn').style.display = 'block';
-        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -140,8 +142,16 @@
             menuItems[index].name = document.getElementById('itemName').value;
             menuItems[index].price = document.getElementById('itemPrice').value;
             menuItems[index].category = document.getElementById('itemCategory').value;
+            menuItems[index].image = document.getElementById('itemImage').value;
             
             resetForm();
+            render();
+        }
+    }
+
+    function deleteItem(id) {
+        if(confirm("למחוק מנה זו?")) {
+            menuItems = menuItems.filter(i => i.id !== id);
             render();
         }
     }
@@ -150,17 +160,17 @@
         document.getElementById('editId').value = '';
         document.getElementById('itemName').value = '';
         document.getElementById('itemPrice').value = '';
+        document.getElementById('itemImage').value = '';
         document.getElementById('addBtn').style.display = 'block';
         document.getElementById('updateBtn').style.display = 'none';
         document.getElementById('cancelBtn').style.display = 'none';
     }
 
-    // --- שמירה וטעינה מהמחשב ---
     function saveToFile() {
         const blob = new Blob([JSON.stringify(menuItems, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "menu_db.json";
+        a.download = "menu_database.json";
         a.click();
     }
 
