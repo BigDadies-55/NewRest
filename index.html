@@ -2,40 +2,43 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOJI - Japanese food Dining Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KOJI - Japanese Art Dining</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #b38e5d;
-            --dark: #1a1a1a;
-            --cream: #fdfbf7;
-            --text-main: #2c2c2c;
-            --text-muted: #7a7a7a;
+            --gold-dark: #8c6d3f;
+            --bg-light: #ffffff;
+            --bg-section: #fcfbf7;
+            --card-shadow: rgba(0, 0, 0, 0.06);
+            --text-dark: #1a1a1a;
+            --text-muted: #555555;
         }
 
         body {
             font-family: 'Assistant', sans-serif;
-            background-color: var(--cream);
+            background-color: var(--bg-section);
+            color: var(--text-dark);
             margin: 0;
             padding: 0;
             line-height: 1.5;
             padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* חלק עליון מוקטן */
+        /* כותרת בהירה ונקייה */
         header { 
-            padding: 15px 10px; /* הקטנת המרווחים */
+            padding: 30px 15px 15px;
             text-align: center; 
+            background-color: var(--bg-light);
+            border-bottom: 1px solid #eee;
         }
         
         .logo-wrapper {
-            width: 70px; /* הקטנת הלוגו */
+            width: 75px;
             height: auto;
-            margin: 0 auto 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0 auto 10px;
         }
         .logo-wrapper img { 
             width: 100%; 
@@ -45,97 +48,246 @@
 
         header h1 { 
             font-family: 'Cinzel', serif; 
-            font-size: 1.4rem; /* הקטנת הכותרת */
+            font-size: 1.5rem;
             margin: 0; 
-            letter-spacing: 2px; 
+            letter-spacing: 3px; 
+            color: var(--text-dark);
+            font-weight: 700;
         }
         
         .slogan { 
             font-family: 'Playfair Display', serif; 
             font-style: italic; 
-            font-size: 0.85rem; /* הקטנת המסר */
+            font-size: 0.95rem;
             color: var(--gold); 
-            margin: 5px auto 0; 
-            max-width: 400px;
+            margin: 5px auto 0;
         }
 
         /* תפריט סינון */
         .sub-menu {
-            display: flex; justify-content: center; background: rgba(253, 251, 247, 0.95);
-            padding: 8px 0; position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(179, 142, 93, 0.1); overflow-x: auto;
-            backdrop-filter: blur(5px);
+            display: flex; 
+            justify-content: center; 
+            background: rgba(255, 255, 255, 0.96);
+            padding: 10px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+            white-space: nowrap;
         }
-        .sub-menu::-webkit-scrollbar { display: none; }
-        .filter-btn { background: none; border: none; color: var(--text-muted); padding: 6px 12px; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
-        .filter-btn.active { color: var(--gold); font-weight: 600; border-bottom: 1px solid var(--gold); }
-        .count-badge { font-size: 0.7rem; opacity: 0.7; margin-right: 2px; }
 
-        /* גריד המנות */
-        .container { max-width: 1100px; margin: 15px auto; padding: 0 15px; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
+        .filter-btn { 
+            background: none; 
+            border: none; 
+            color: var(--text-muted); 
+            padding: 10px 20px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            font-weight: 600;
+            transition: 0.3s;
+            font-family: 'Assistant', sans-serif;
+        }
 
+        .filter-btn.active { 
+            color: var(--gold); 
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .count-badge { font-size: 0.75rem; opacity: 0.6; margin-right: 3px; }
+
+        /* גריד מוצרים */
+        .container { 
+            max-width: 1200px; 
+            margin: 25px auto; 
+            padding: 0 15px; 
+        }
+
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* כרטיס מנת היום המיוחד */
+        .special-card {
+            background: #fff;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(179, 142, 93, 0.15);
+            position: relative;
+            overflow: hidden;
+            grid-column: 1 / -1; /* תופס שורה שלמה במובייל ודסקטופ */
+            margin-bottom: 10px;
+        }
+
+        .special-card::before {
+            content: 'SPECIAL';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--gold);
+            color: white;
+            font-size: 0.6rem;
+            padding: 5px 35px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .special-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--gold-dark);
+            margin-bottom: 8px;
+        }
+
+        .special-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 300;
+        }
+
+        /* כרטיס מוצר */
         .card {
-            background: white; overflow: hidden; display: flex; flex-direction: column;
-            transition: transform 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.05); cursor: pointer;
+            background: #ffffff; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
         }
-        .card:hover { transform: translateY(-5px); }
 
-        .img-wrapper { width: 100%; height: 160px; overflow: hidden; }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .card:active { transform: scale(0.98); }
 
-        .card-content { padding: 12px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
-        .category-tag { font-size: 0.6rem; color: var(--gold); letter-spacing: 1px; margin-bottom: 3px; }
-        .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin: 0 0 5px 0; color: var(--dark); }
+        .img-wrapper { 
+            width: 100%; 
+            height: 200px; 
+            overflow: hidden; 
+            background: #f9f9f9;
+        }
+
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+        }
+        
+        .card-content { 
+            padding: 20px; 
+            text-align: center; 
+            flex-grow: 1; 
+        }
+
+        .category-tag { 
+            font-size: 0.7rem; 
+            color: var(--gold); 
+            letter-spacing: 1.5px; 
+            margin-bottom: 8px; 
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-title { 
+            font-family: 'Cinzel', serif; 
+            font-size: 1.25rem; 
+            margin: 0 0 10px 0; 
+            color: var(--text-dark); 
+        }
+
         .card-desc { 
-            font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 300;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.4em; 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
+            margin-bottom: 15px; 
+            min-height: 2.7em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .card-price { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--dark); margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(179, 142, 93, 0.1); }
+
+        .card-price { 
+            font-family: 'Cinzel', serif; 
+            font-size: 1.15rem; 
+            color: var(--text-dark); 
+            font-weight: 700;
+            padding-top: 12px;
+            border-top: 1px dashed #eee;
+        }
 
         /* פס הזמנות */
         .order-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--dark); color: white;
-            padding: 12px; text-align: center; z-index: 1500;
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0;
+            background: var(--text-dark); 
+            color: white;
+            padding: 15px; 
+            text-align: center; 
+            z-index: 1500;
         }
         .order-link {
-            color: var(--gold); text-decoration: none; font-weight: 600; font-size: 1rem;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
+            color: #fff; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.1rem;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .order-link span:last-child { color: var(--gold); }
+
+        @media (max-width: 767px) {
+            .menu-grid { grid-template-columns: 1fr; gap: 20px; }
+            .img-wrapper { height: 240px; }
+            header { padding: 20px 15px 10px; }
+            .sub-menu { justify-content: flex-start; padding-right: 15px; }
+            .special-card { padding: 20px; }
         }
 
         /* Modal */
         .modal {
             display: none; position: fixed; z-index: 2000; top: 0; left: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
             justify-content: center; align-items: center; cursor: zoom-out;
         }
         .modal.show { display: flex; }
         .modal-content { max-width: 90%; max-height: 80%; border: 2px solid var(--gold); }
-
-        @media (max-width: 600px) {
-            .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .img-wrapper { height: 120px; }
-            header { padding: 10px 10px 5px; }
-            .logo-wrapper { width: 60px; }
-            header h1 { font-size: 1.2rem; }
-        }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo-wrapper">
-        <img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" alt="Logo">
+        <img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" alt="KOJI">
     </div>
-	<div class="slogan">מסורת ומודרניות בכל מנה</div>
+  
+    <div class="slogan">Japanese food | חוויה קולינרית יפנית</div>
 </header>
 
 <nav class="sub-menu" id="filter-nav"></nav>
 
 <div class="container">
-    <div id="menu-display" class="menu-grid"></div>
+    <div id="menu-display" class="menu-grid">
+        <div class="special-card">
+            <div class="special-title">מנת היום המיוחדת</div>
+            <div class="special-text">שאלו את המלצר.ית על ההמלצה היומית שלנו</div>
+        </div>
+        </div>
 </div>
 
 <div id="imageModal" class="modal" onclick="closeModal()">
@@ -144,13 +296,13 @@
 
 <div class="order-bar">
     <a href="tel:0501234567" class="order-link">
-        <span>📞 להזמנות:</span>
+        <span>להזמנות:</span>
         <span>050-1234567</span>
     </a>
 </div>
 
-<footer style="text-align:center; padding:15px; font-size:0.65rem; color:var(--text-muted); margin-bottom: 40px;">
-    © 2026 KOJI JAPANESE FOOD | FINE DINING ART
+<footer style="text-align:center; padding:20px; font-size:0.7rem; color:var(--text-muted); margin-bottom: 50px;">
+    © 2026 KOJI | Fine Japanese Dining | Yokne'am Illit
 </footer>
 
 <script>
@@ -168,7 +320,9 @@
             allItems = await response.json();
             updateFilters();
             renderItems();
-        } catch (error) { console.error("Error:", error); }
+        } catch (error) { 
+            console.error("Error:", error); 
+        }
     }
 
     function updateFilters() {
@@ -183,14 +337,23 @@
 
     function renderItems() {
         const display = document.getElementById('menu-display');
+        
+        // נשמור את הקארד של מנת היום
+        const specialCard = `
+            <div class="special-card">
+                <div class="special-title">מנת היום המיוחדת</div>
+                <div class="special-text">שאלו את המלצר.ית על ההמלצה היומית שלנו</div>
+            </div>`;
+
         const filtered = currentCategory === 'הכל' ? allItems : allItems.filter(i => i.category === currentCategory);
-        display.innerHTML = filtered.map(item => `
+        
+        display.innerHTML = specialCard + filtered.map(item => `
             <div class="card" onclick="openModal('${item.image}')">
-                <div class="img-wrapper"><img src="${item.image || 'https://via.placeholder.com/300x200'}" alt="${item.name}"></div>
+                <div class="img-wrapper"><img src="${item.image || 'https://via.placeholder.com/500x300'}" alt="${item.name}"></div>
                 <div class="card-content">
                     <span class="category-tag">${item.category}</span>
                     <h3 class="card-title">${item.name}</h3>
-                    <p class="card-desc">${item.desc || ''}</p>
+                    <p class="card-desc">${item.desc || 'מנת שף המורכבת מחומרי הגלם הטובים ביותר.'}</p>
                     <div class="card-price">₪${item.price}</div>
                 </div>
             </div>`).join('');
