@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התפריט שלנו</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; margin: 0; direction: rtl; }
+        header { background: #2c3e50; color: white; padding: 40px 20px; text-align: center; }
+        .sub-menu { display: flex; justify-content: center; background: white; padding: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .filter-btn { background: none; border: none; padding: 12px 25px; cursor: pointer; font-weight: bold; color: #7f8c8d; border-bottom: 3px solid transparent; transition: 0.3s; }
+        .filter-btn.active { color: #e67e22; border-bottom: 3px solid #e67e22; }
+        .container { max-width: 1200px; margin: auto; padding: 30px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; flex-grow: 1; }
+        .card-category { font-size: 0.75em; color: #e67e22; font-weight: bold; margin-bottom: 5px; }
+        .card-title { font-size: 1.3em; font-weight: bold; margin: 0 0 10px 0; }
+        .card-desc { font-size: 0.9em; color: #666; line-height: 1.5; margin-bottom: 15px; min-height: 45px; }
+        .card-price { font-size: 1.3em; color: #27ae60; font-weight: bold; border-top: 1px solid #f1f1f1; padding-top: 15px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🍽️ ברוכים הבאים למסעדה שלנו</h1>
+</header>
+
+<nav class="sub-menu">
+    <button class="filter-btn active" onclick="filterMenu('הכל', this)">הכל</button>
+    <button class="filter-btn" onclick="filterMenu('ראשונות', this)">ראשונות</button>
+    <button class="filter-btn" onclick="filterMenu('עיקריות', this)">עיקריות</button>
+    <button class="filter-btn" onclick="filterMenu('קינוחים', this)">קינוחים</button>
+    <button class="filter-btn" onclick="filterMenu('שתייה', this)">שתייה</button>
+</nav>
+
+<div class="container">
+    <div id="menu-display" class="menu-grid"></div>
+</div>
+
+<script>
+    // --- שנה את אלו לפרטים שלך ---
+    const REPO_OWNER = 'BigDadies-55';
+    const REPO_NAME = 'restaurant-menu';
+    const FILE_PATH = 'menu_db.json';
+
+    let allItems = [];
+
+    async function loadData() {
+        // טעינת הקובץ הגולמי מ-GitHub
+        const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}?v=${new Date().getTime()}`;
+        try {
+            const response = await fetch(rawUrl);
+            allItems = await response.json();
+            renderItems(allItems);
+        } catch (error) {
+            console.error("שגיאה:", error);
+        }
+    }
+
+    function renderItems(items) {
+        const display = document.getElementById('menu-display');
+        display.innerHTML = items.map(item => `
+            <div class="card">
+                <img src="${item.image || 'https://via.placeholder.com/300x200'}" alt="${item.name}">
+                <div class="card-content">
+                    <div class="card-category">${item.category}</div>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-desc">${item.desc || 'מנה טעימה מחומרי גלם טריים'}</div>
+                    <div class="card-price">₪${item.price}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterMenu(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filtered = category === 'הכל' ? allItems : allItems.filter(i => i.category === category);
+        renderItems(filtered);
+    }
+
+    loadData();
+</script>
+</body>
+</html>
