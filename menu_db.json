@@ -30,5 +30,13 @@
     "category": "ראשונות",
     "desc": "עגבניות שרי חלוטות מושרות בסויה מירין וחומץ אורז אדום, סאשימי דג לבן, אבקת אצת נורי ושומשום.",
     "image": "https://raw.githubusercontent.com/BigDadies-55/NewRest/main/images/img_1776290585364.jpg"
+  },
+  {
+    "id": 1776291212173,
+    "name": "טונקצ'ו FISH",
+    "price": "99",
+    "category": "עיקריות",
+    "desc": "מדליוני קרנץ' דג, בקמח KOJI ופנקו, סלט מלפפונים מוחמץ בכבישה חמה ואיולי מיסו\n\n",
+    "image": "https://raw.githubusercontent.com/BigDadies-55/NewRest/main/images/img_1776291210911.jpg"
   }
 ]
