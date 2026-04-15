@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ניהול תפריט מקצועי - עריכה ושמירה</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef2f3; padding: 20px; direction: rtl; }
+        .admin-card { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
+        input, select, button { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        
+        .btn-save { background: #27ae60; color: white; border: none; cursor: pointer; font-size: 1.1em; font-weight: bold; margin-top: 10px; }
+        .btn-update { background: #2980b9; color: white; display: none; } /* מוסתר כברירת מחדל */
+        
+        .file-section { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px dashed #bbb; margin-bottom: 25px; }
+        
+        .item-list { margin-top: 30px; border-top: 2px solid #eee; padding-top: 15px; }
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #f1f1f1; background: #fff; margin-bottom: 5px; border-radius: 5px; }
+        .item-info { flex-grow: 1; }
+        .actions { display: flex; gap: 5px; }
+        .btn-edit { background: #f39c12; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .btn-del { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="admin-card">
+    <h2>🍴 ניהול תפריט דינמי</h2>
+    
+    <div class="file-section">
+        <label>📁 בסיס נתונים מקומי (JSON):</label>
+        <input type="file" id="fileInput" accept=".json" style="margin-bottom: 10px; border: none; background: transparent;">
+        <button onclick="saveToFile()" style="background: #34495e; color: white; border: none; cursor: pointer; padding: 8px;">💾 הורד/גבה בסיס נתונים למחשב</button>
+    </div>
+
+    <div id="form-container">
+        <input type="hidden" id="editId"> <div class="input-group">
+            <label>שם המנה:</label>
+            <input type="text" id="name" placeholder="לדוגמה: המבורגר בקר">
+        </div>
+        
+        <div class="input-group">
+            <label>מחיר (₪):</label>
+            <input type="number" id="price" placeholder="0.00">
+        </div>
+
+        <div class="input-group">
