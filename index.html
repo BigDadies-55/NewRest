@@ -3,249 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Signature - תפריט שף</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Assistant:wght@200;400;700&display=swap" rel="stylesheet">
+    <title>KOJI - Japanese food Dining Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c5a059;
+            --gold: #b38e5d;
             --dark: #1a1a1a;
-            --light: #f9f9f9;
-            --text: #333;
+            --cream: #fdfbf7;
+            --text-main: #2c2c2c;
+            --text-muted: #7a7a7a;
         }
 
         body {
             font-family: 'Assistant', sans-serif;
-            background-color: var(--light);
+            background-color: var(--cream);
             margin: 0;
-            color: var(--text);
-            line-height: 1.6;
+            padding: 0;
+            line-height: 1.5;
+            padding-bottom: 80px;
         }
 
-        /* Hero Section */
-        header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--gold);
+        /* חלק עליון מוקטן */
+        header { 
+            padding: 15px 10px; /* הקטנת המרווחים */
+            text-align: center; 
         }
-
-        header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5em;
-            letter-spacing: 5px;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        header p {
-            font-size: 1.2em;
-            font-weight: 200;
-            letter-spacing: 2px;
-            margin-top: 10px;
-            color: var(--gold);
-        }
-
-        /* Sub-Menu Navigation */
-        .sub-menu {
+        
+        .logo-wrapper {
+            width: 70px; /* הקטנת הלוגו */
+            height: auto;
+            margin: 0 auto 5px;
             display: flex;
             justify-content: center;
-            background: var(--dark);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            align-items: center;
+        }
+        .logo-wrapper img { 
+            width: 100%; 
+            height: auto; 
+            object-fit: contain; 
         }
 
-        .filter-btn {
-            background: none;
-            border: none;
-            color: #888;
-            padding: 10px 25px;
-            font-family: 'Cinzel', serif;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: 0.4s;
-            position: relative;
+        header h1 { 
+            font-family: 'Cinzel', serif; 
+            font-size: 1.4rem; /* הקטנת הכותרת */
+            margin: 0; 
+            letter-spacing: 2px; 
+        }
+        
+        .slogan { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; 
+            font-size: 0.85rem; /* הקטנת המסר */
+            color: var(--gold); 
+            margin: 5px auto 0; 
+            max-width: 400px;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            color: var(--gold);
+        /* תפריט סינון */
+        .sub-menu {
+            display: flex; justify-content: center; background: rgba(253, 251, 247, 0.95);
+            padding: 8px 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(179, 142, 93, 0.1); overflow-x: auto;
+            backdrop-filter: blur(5px);
         }
+        .sub-menu::-webkit-scrollbar { display: none; }
+        .filter-btn { background: none; border: none; color: var(--text-muted); padding: 6px 12px; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
+        .filter-btn.active { color: var(--gold); font-weight: 600; border-bottom: 1px solid var(--gold); }
+        .count-badge { font-size: 0.7rem; opacity: 0.7; margin-right: 2px; }
 
-        .filter-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            width: 50%;
-            height: 2px;
-            background: var(--gold);
-        }
+        /* גריד המנות */
+        .container { max-width: 1100px; margin: 15px auto; padding: 0 15px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
 
-        /* Menu Grid */
-        .container {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        /* Card Design */
         .card {
-            background: white;
-            border: 1px solid #eee;
-            overflow: hidden;
-            transition: 0.5s;
-            position: relative;
+            background: white; overflow: hidden; display: flex; flex-direction: column;
+            transition: transform 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.05); cursor: pointer;
+        }
+        .card:hover { transform: translateY(-5px); }
+
+        .img-wrapper { width: 100%; height: 160px; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-content { padding: 12px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
+        .category-tag { font-size: 0.6rem; color: var(--gold); letter-spacing: 1px; margin-bottom: 3px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin: 0 0 5px 0; color: var(--dark); }
+        .card-desc { 
+            font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 300;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.4em; 
+        }
+        .card-price { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--dark); margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(179, 142, 93, 0.1); }
+
+        /* פס הזמנות */
+        .order-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--dark); color: white;
+            padding: 12px; text-align: center; z-index: 1500;
+        }
+        .order-link {
+            color: var(--gold); text-decoration: none; font-weight: 600; font-size: 1rem;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
         }
 
-        .card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transform: translateY(-10px);
+        /* Modal */
+        .modal {
+            display: none; position: fixed; z-index: 2000; top: 0; left: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center; cursor: zoom-out;
         }
+        .modal.show { display: flex; }
+        .modal-content { max-width: 90%; max-height: 80%; border: 2px solid var(--gold); }
 
-        .img-container {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.8s;
-        }
-
-        .card:hover img {
-            transform: scale(1.1);
-        }
-
-        .card-content {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .card-category {
-            font-size: 0.8em;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5em;
-            margin: 0 0 15px 0;
-            color: var(--dark);
-        }
-
-        .card-desc {
-            font-size: 0.95em;
-            color: #777;
-            margin-bottom: 20px;
-            min-height: 50px;
-            font-weight: 300;
-        }
-
-        .card-price {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4em;
-            color: var(--dark);
-            font-weight: bold;
-            display: inline-block;
-            border-top: 1px solid var(--gold);
-            padding-top: 10px;
-            margin-top: 10px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 60px;
-            background: var(--dark);
-            color: #555;
-            font-size: 0.9em;
+        @media (max-width: 600px) {
+            .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .img-wrapper { height: 120px; }
+            header { padding: 10px 10px 5px; }
+            .logo-wrapper { width: 60px; }
+            header h1 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>The Signature</h1>
-    <p>FINE DINING EXPERIENCE</p>
+    <div class="logo-wrapper">
+        <img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" alt="Logo">
+    </div>
+	<div class="slogan">מסורת ומודרניות בכל מנה</div>
 </header>
 
-<nav class="sub-menu">
-    <button class="filter-btn active" onclick="filterMenu('הכל', this)">All</button>
-    <button class="filter-btn" onclick="filterMenu('ראשונות', this)">Starters</button>
-    <button class="filter-btn" onclick="filterMenu('עיקריות', this)">Main Courses</button>
-    <button class="filter-btn" onclick="filterMenu('קינוחים', this)">Desserts</button>
-    <button class="filter-btn" onclick="filterMenu('שתייה', this)">Drinks</button>
-</nav>
+<nav class="sub-menu" id="filter-nav"></nav>
 
 <div class="container">
-    <div id="menu-display" class="menu-grid">
-        </div>
+    <div id="menu-display" class="menu-grid"></div>
 </div>
 
-<footer>
-    <p>© 2026 THE SIGNATURE RESTAURANT | CRAFTED FOR EXCELLENCE</p>
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <img class="modal-content" id="fullImage">
+</div>
+
+<div class="order-bar">
+    <a href="tel:0501234567" class="order-link">
+        <span>📞 להזמנות:</span>
+        <span>050-1234567</span>
+    </a>
+</div>
+
+<footer style="text-align:center; padding:15px; font-size:0.65rem; color:var(--text-muted); margin-bottom: 40px;">
+    © 2026 KOJI JAPANESE FOOD | FINE DINING ART
 </footer>
 
 <script>
-    // --- הגדרות GITHUB - עדכן כאן! ---
     const REPO_OWNER = 'BigDadies-55';
     const REPO_NAME = 'NewRest';
     const FILE_PATH = 'menu_db.json';
-    
+
     let allItems = [];
+    let currentCategory = 'הכל';
 
     async function loadData() {
         const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}?v=${new Date().getTime()}`;
         try {
             const response = await fetch(rawUrl);
             allItems = await response.json();
-            renderItems(allItems);
-        } catch (error) {
-            console.error("Error loading menu:", error);
-        }
+            updateFilters();
+            renderItems();
+        } catch (error) { console.error("Error:", error); }
     }
 
-    function renderItems(items) {
+    function updateFilters() {
+        const nav = document.getElementById('filter-nav');
+        const categories = ['הכל', 'ראשונות', 'עיקריות', 'קינוחים', 'שתייה'];
+        nav.innerHTML = categories.map(cat => {
+            const count = cat === 'הכל' ? allItems.length : allItems.filter(item => item.category === cat).length;
+            const activeClass = cat === currentCategory ? 'active' : '';
+            return `<button class="filter-btn ${activeClass}" onclick="filterMenu('${cat}', this)">${cat} <span class="count-badge">(${count})</span></button>`;
+        }).join('');
+    }
+
+    function renderItems() {
         const display = document.getElementById('menu-display');
-        display.innerHTML = items.map(item => `
-            <div class="card">
-                <div class="img-container">
-                    <img src="${item.image || 'https://via.placeholder.com/600x400?text=Signature+Dish'}" alt="${item.name}">
-                </div>
+        const filtered = currentCategory === 'הכל' ? allItems : allItems.filter(i => i.category === currentCategory);
+        display.innerHTML = filtered.map(item => `
+            <div class="card" onclick="openModal('${item.image}')">
+                <div class="img-wrapper"><img src="${item.image || 'https://via.placeholder.com/300x200'}" alt="${item.name}"></div>
                 <div class="card-content">
-                    <div class="card-category">${item.category}</div>
+                    <span class="category-tag">${item.category}</span>
                     <h3 class="card-title">${item.name}</h3>
-                    <p class="card-desc">${item.desc || 'A masterfully crafted dish using only the finest seasonal ingredients.'}</p>
+                    <p class="card-desc">${item.desc || ''}</p>
                     <div class="card-price">₪${item.price}</div>
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
     }
 
     function filterMenu(category, btn) {
+        currentCategory = category;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const filtered = category === 'הכל' ? allItems : allItems.filter(i => i.category === category);
-        renderItems(filtered);
+        renderItems();
     }
+
+    function openModal(src) {
+        if(!src || src === 'undefined' || src === 'null') return;
+        const modal = document.getElementById('imageModal');
+        const fullImg = document.getElementById('fullImage');
+        fullImg.src = src;
+        modal.classList.add('show');
+    }
+
+    function closeModal() { document.getElementById('imageModal').classList.remove('show'); }
 
     loadData();
 </script>
