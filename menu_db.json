@@ -137,7 +137,9 @@
     "משוגע"
   ],
   "settings": {
-    "name": "KOJI",
-    "logo": "logo_1776346027763.png"
+    "name": "",
+    "logo": "logo_1776346027763.png",
+    "phone": "",
+    "address": ""
   }
 }
