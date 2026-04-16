@@ -4,100 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOJI - Japanese Art Dining</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #b38e5d; --bg: #fcfbf7; --text: #1a1a1a; }
-        body { font-family: 'Assistant', sans-serif; background: var(--bg); color: var(--text); margin: 0; direction: rtl; }
-        header { padding: 30px; text-align: center; background: #fff; border-bottom: 1px solid #eee; }
-        .sub-menu { display: flex; overflow-x: auto; background: #fff; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #eee; padding: 10px; }
-        .filter-btn { background: none; border: none; padding: 10px 20px; cursor: pointer; font-weight: 600; white-space: nowrap; }
+        :root { --gold: #b38e5d; --bg: #fcfbf7; --text: #1a1a1a; --white: #ffffff; }
+        body { font-family: 'Assistant', sans-serif; background: var(--bg); color: var(--text); margin: 0; direction: rtl; text-align: center; padding-bottom: 80px; }
+        
+        /* ראש הדף */
+        header { padding: 40px 15px 20px; background: var(--white); border-bottom: 1px solid #eee; }
+        .logo-img { height: 80px; margin-bottom: 10px; }
+        .main-title { font-family: 'Cinzel', serif; margin: 0; font-size: 1.8rem; letter-spacing: 2px; }
+        .address-text { font-size: 0.85rem; color: #888; margin-top: 5px; font-weight: 300; }
+
+        /* תפריט ניווט קטגוריות דביק למעלה */
+        .sub-menu { display: flex; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #eee; padding: 10px; overflow-x: auto; gap: 10px; }
+        .sub-menu::-webkit-scrollbar { display: none; }
+        .filter-btn { background: none; border: none; padding: 8px 18px; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #555; transition: 0.3s; white-space: nowrap; }
         .filter-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+        /* גריד מנות */
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #fff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; cursor: pointer; border: 1px solid #f0f0f0; }
-        .img-wrapper { height: 200px; background: #eee; overflow: hidden; }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .content { padding: 15px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-title { font-family: 'Cinzel', serif; margin: 5px 0; font-size: 1.1rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
         
-        /* עיצוב תגיות סוג מנה */
-        .type-labels { display: flex; justify-content: center; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; min-height: 20px; }
-        .type-tag { font-size: 0.7rem; background: #e8f5e9; padding: 2px 8px; border-radius: 4px; color: #2e7d32; font-weight: bold; border: 1px solid #c8e6c9; }
+        /* עיצוב כרטיס מנה עם מסגרת עדינה מאוד */
+        .card { 
+            background: var(--white); 
+            border-radius: 8px; /* פינות מעוגלות עדינות יותר */
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            cursor: pointer;
+            transition: 0.3s ease;
+            
+            /* מסגרת עדינה מאוד */
+            border: 1px solid #e0e0e0;
+            /* צללית בלתי נראית כמעט */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
         
-        .desc { font-size: 0.85rem; color: #666; height: 3.2em; overflow: hidden; margin: 10px 0; }
-        .price { font-weight: 700; margin-top: auto; border-top: 1px dashed #eee; padding-top: 10px; font-size: 1rem; }
+        /* אפקט ריחוף מעודן */
+        .card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-color: #d0d0d0;
+        }
+
+        .img-box { height: 200px; overflow: hidden; background: #f9f9f9; border-bottom: 1px solid #eee; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .card:hover .img-box img { transform: scale(1.03); }
         
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .content { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
+        .type-labels { display: flex; justify-content: center; gap: 5px; margin-bottom: 8px; }
+        .type-tag { font-size: 0.65rem; background: #fdfaf5; padding: 2px 8px; border-radius: 4px; color: var(--gold); font-weight: 700; border: 1px solid #eee; }
+        .card-name { font-family: 'Cinzel', serif; margin: 5px 0; font-size: 1.1rem; }
+        
+        /* תיאור קצר ומעודן */
+        .card-desc { font-size: 0.85rem; color: #777; margin: 5px 0 15px 0; line-height: 1.4; height: 2.8em; overflow: hidden; }
+
+        .price { font-weight: 700; font-size: 1.1rem; margin-top: auto; padding-top: 10px; border-top: 1px dashed #eee; color: var(--text); }
+
+        /* כפתורי פעולה צפים למטה */
+        .floating-actions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(179, 142, 93, 0.2);
+            width: max-content;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn-order-float {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-phone-float {
+            background: #f8f9fa;
+            color: var(--text);
+            border: 1px solid #ddd;
+        }
+
+        .action-btn:active { transform: scale(0.95); }
+
+        /* מודל תמונה */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
         .modal.show { display: flex; }
-        .modal img { max-width: 90%; max-height: 80%; object-fit: cover; border: 2px solid var(--gold); }
+        .modal img { max-width: 90%; max-height: 80vh; border-radius: 10px; border: 2px solid var(--gold); }
     </style>
 </head>
 <body>
+
 <header>
-    <img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" style="width:70px;"><br>
-    <div style="color:var(--gold); font-style:italic; font-size: 0.9rem; margin-top: 5px;">Japanese Dining Experience</div>
+    <img id="mainLogo" src="" class="logo-img">
+    <h1 id="mainTitle" class="main-title"></h1>
+    <div id="mainAddress" class="address-text"></div>
 </header>
+
 <nav class="sub-menu" id="filter-nav"></nav>
-<div class="container"><div id="menu-display" class="menu-grid"></div></div>
+
+<div class="container">
+    <div id="menu-display" class="menu-grid"></div>
+</div>
+
+<div class="floating-actions" id="floating-bar">
+    </div>
+
 <div id="imageModal" class="modal" onclick="this.classList.remove('show')"><img id="fullImg"></div>
 
 <script>
-    const REPO_OWNER = 'BigDadies-55';
-    const REPO_NAME = 'NewRest';
-    const DB_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/menu_db.json`;
-    const IMG_BASE = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/images/`;
-
-    let db = { categories: [], items: [] };
-    let currentCat = '';
+    const REPO = 'BigDadies-55/NewRest';
+    const DB_URL = `https://raw.githubusercontent.com/${REPO}/main/menu_db.json`;
+    let db = { settings: {}, categories: [], items: [] };
+    let currentCat = "";
 
     async function load() {
         try {
             const res = await fetch(`${DB_URL}?v=${Date.now()}`);
             db = await res.json();
             
-            if (db.categories.length > 0) {
-                currentCat = db.categories[0];
-                renderFilters();
-                renderItems();
+            document.getElementById('mainTitle').innerText = db.settings.name || "";
+            document.getElementById('mainAddress').innerText = db.settings.address || "";
+            if(db.settings.logo) document.getElementById('mainLogo').src = `https://raw.githubusercontent.com/${REPO}/main/images/${db.settings.logo}`;
+            
+            // בניית הכפתורים הצפים למטה
+            let barHtml = "";
+            if (db.settings.phone) {
+                barHtml += `<a href="tel:${db.settings.phone}" class="action-btn btn-phone-float">📞 התקשרו</a>`;
             }
-        } catch(e) { console.error("Error loading menu:", e); }
+            if (db.settings.orderLink) {
+                barHtml += `<a href="${db.settings.orderLink}" target="_blank" class="action-btn btn-order-float">🛵 הזמנה אונליין</a>`;
+            }
+            document.getElementById('floating-bar').innerHTML = barHtml;
+
+            if(db.categories.length > 0) { 
+                currentCat = db.categories[0]; 
+                render(); 
+            }
+        } catch(e) { console.error(e); }
     }
 
-    function renderFilters() {
+    function render() {
         document.getElementById('filter-nav').innerHTML = db.categories.map(c => 
-            `<button class="filter-btn ${c===currentCat?'active':''}" onclick="setCat('${c}',this)">${c}</button>`).join('');
-    }
+            `<button class="filter-btn ${c==currentCat?'active':''}" onclick="changeCat('${c}')">${c}</button>`).join('');
+        
+        const items = db.items.filter(i => i.category == currentCat);
+        
+        if (items.length === 0) {
+            document.getElementById('menu-display').innerHTML = '<p style="text-align:center; grid-column:1/-1; opacity:0.5;">אין מנות בקטגוריה זו.</p>';
+            return;
+        }
 
-    function renderItems() {
-        const filtered = db.items.filter(i => i.category === currentCat);
-        document.getElementById('menu-display').innerHTML = filtered.map(i => {
-            const imgSrc = i.image ? IMG_BASE + i.image : 'https://via.placeholder.com/500x300';
-            return `
-            <div class="card" onclick="openM('${imgSrc}')">
-                <div class="img-wrapper"><img src="${imgSrc}" loading="lazy"></div>
+        document.getElementById('menu-display').innerHTML = items.map(i => `
+            <div class="card" onclick="openM('https://raw.githubusercontent.com/${REPO}/main/images/${i.image}')">
+                <div class="img-box"><img src="https://raw.githubusercontent.com/${REPO}/main/images/${i.image}" loading="lazy"></div>
                 <div class="content">
-                    <div class="type-labels">
-                        ${(i.types || []).map(t => `<span class="type-tag">${t}</span>`).join('')}
-                    </div>
-                    <h3 class="card-title">${i.name}</h3>
-                    <p class="desc">${i.desc || 'מנה יפנית מסורתית המוכנת מחומרי הגלם האיכותיים ביותר.'}</p>
+                    <div class="type-labels">${(i.types || []).map(t => `<span class="type-tag">${t}</span>`).join('')}</div>
+                    <h3 class="card-name">${i.name}</h3>
+                    <p class="card-desc">${i.desc || 'מנה יפנית מסורתית מחומרי הגלם הטריים ביותר.'}</p>
                     <div class="price">₪${i.price}</div>
                 </div>
-            </div>`;
-        }).join('');
+            </div>`).join('');
     }
 
-    function setCat(c, b) { 
-        currentCat = c; 
-        document.querySelectorAll('.filter-btn').forEach(btn=>btn.classList.remove('active')); 
-        b.classList.add('active'); 
-        renderItems(); 
-    }
-    
-    function openM(s) { 
-        document.getElementById('fullImg').src = s; 
-        document.getElementById('imageModal').classList.add('show'); 
-    }
+    function changeCat(c) { currentCat = c; render(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+    function openM(s) { document.getElementById('fullImg').src = s; document.getElementById('imageModal').classList.add('show'); }
     
     load();
 </script>
