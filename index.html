@@ -11,114 +11,62 @@
             --gold-dark: #8c6d3f;
             --bg-light: #ffffff;
             --bg-section: #fcfbf7;
-            --card-shadow: rgba(0, 0, 0, 0.12); /* צל מודגש יותר */
+            --card-shadow: rgba(0, 0, 0, 0.12);
             --text-dark: #1a1a1a;
             --text-muted: #555555;
         }
 
-        body {
-            font-family: 'Assistant', sans-serif;
-            background-color: var(--bg-section);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            padding-bottom: 80px;
-            -webkit-tap-highlight-color: transparent;
-        }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg-section); color: var(--text-dark); margin: 0; padding-bottom: 80px; direction: rtl; }
+        header { padding: 30px 15px 15px; text-align: center; background: var(--bg-light); border-bottom: 1px solid #eee; }
+        .logo-wrapper { width: 75px; margin: 0 auto 10px; }
+        .logo-wrapper img { width: 100%; }
+        .slogan { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; color: var(--gold); }
 
-        header { 
-            padding: 30px 15px 15px;
-            text-align: center; 
-            background-color: var(--bg-light);
-            border-bottom: 1px solid #eee;
-        }
-        
-        .logo-wrapper {
-            width: 75px;
-            height: auto;
-            margin: 0 auto 10px;
-        }
-        .logo-wrapper img { width: 100%; height: auto; object-fit: contain; }
-
-        .slogan { 
-            font-family: 'Playfair Display', serif; 
-            font-style: italic; 
-            font-size: 0.95rem;
-            color: var(--gold); 
-            margin: 5px auto 0;
-        }
-
+        /* ניווט קטגוריות דינמי */
         .sub-menu {
-            display: flex; justify-content: center; background: rgba(255, 255, 255, 0.96);
+            display: flex; justify-content: flex-start; background: rgba(255, 255, 255, 0.96);
             padding: 10px 0; position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid #eee; backdrop-filter: blur(10px);
-            overflow-x: auto; white-space: nowrap;
+            overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
         }
         .sub-menu::-webkit-scrollbar { display: none; }
-
         .filter-btn { 
-            background: none; border: none; color: var(--text-muted); 
-            padding: 10px 20px; font-size: 0.9rem; cursor: pointer; 
-            font-weight: 600; transition: 0.3s; font-family: 'Assistant', sans-serif;
+            background: none; border: none; color: var(--text-muted); padding: 10px 20px; 
+            font-size: 0.95rem; cursor: pointer; font-weight: 600; transition: 0.3s;
         }
         .filter-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
-        .count-badge { font-size: 0.75rem; opacity: 0.6; margin-right: 3px; }
 
         .container { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
 
-        /* כרטיס מנה עם צל משופר */
+        /* כרטיס מנה עם צל */
         .card {
-            background: #ffffff; overflow: hidden; display: flex; flex-direction: column;
-            border-radius: 12px; 
-            box-shadow: 0 8px 20px var(--card-shadow); /* צל מסביב למנה */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            cursor: pointer; border: 1px solid #f0f0f0;
+            background: #fff; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 8px 20px var(--card-shadow); transition: 0.3s; 
+            cursor: pointer; border: 1px solid #f0f0f0; display: flex; flex-direction: column;
         }
-        .card:active { transform: scale(0.98); }
-        .card:hover { box-shadow: 0 12px 25px rgba(0,0,0,0.18); }
-
-        .img-wrapper { width: 100%; height: 200px; overflow: hidden; background: #f9f9f9; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.18); }
+        .img-wrapper { width: 100%; height: 200px; background: #eee; }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
         .card-content { padding: 20px; text-align: center; flex-grow: 1; }
-        .category-tag { font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
-        .card-title { font-family: 'Cinzel', serif; font-size: 1.25rem; margin: 5px 0 10px; color: var(--text-dark); }
-        .card-desc { font-size: 0.9rem; color: var(--text-muted); min-height: 2.7em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        
-        /* מחיר מוקטן */
-        .card-price { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-dark); font-weight: 700; padding-top: 12px; border-top: 1px dashed #eee; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 1.2rem; margin: 10px 0; }
+        .card-desc { font-size: 0.9rem; color: var(--text-muted); min-height: 2.7em; }
+        .card-price { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; padding-top: 12px; border-top: 1px dashed #eee; margin-top: 10px; }
 
-        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--text-dark); color: white; padding: 15px; text-align: center; z-index: 1500; }
-        .order-link { color: #fff; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .order-link span:last-child { color: var(--gold); }
-
-        /* מודל תמונה עם גודל אחיד */
-        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; cursor: zoom-out; }
+        /* מודל תמונה אחיד */
+        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
         .modal.show { display: flex; }
-        .modal-content { 
-            width: 90vw; 
-            height: 60vh; 
-            max-width: 800px; 
-            object-fit: cover; /* האחדת גודל תמונות */
-            border: 2px solid var(--gold); 
-            background: #fff;
-        }
+        .modal-content { width: 90vw; height: 60vh; max-width: 800px; object-fit: cover; border: 2px solid var(--gold); background: #fff; }
 
-        @media (max-width: 767px) {
-            .menu-grid { grid-template-columns: 1fr; }
-            .img-wrapper { height: 240px; }
-            .modal-content { height: 50vh; }
-        }
+        .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--text-dark); color: white; padding: 15px; text-align: center; }
+        .order-link { color: #fff; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-wrapper">
-        <img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" alt="KOJI">
-    </div>
+    <div class="logo-wrapper"><img src="https://www.koji-sushi.co.il/wp-content/uploads/2024/05/%D7%9C%D7%95%D7%92%D7%95-03.png" alt="KOJI"></div>
     <div class="slogan">Japanese food | חוויה קולינרית יפנית</div>
 </header>
 
@@ -128,93 +76,83 @@
     <div id="menu-display" class="menu-grid"></div>
 </div>
 
-<div id="imageModal" class="modal" onclick="closeModal()">
-    <img class="modal-content" id="fullImage">
-</div>
+<div id="imageModal" class="modal" onclick="closeModal()"><img class="modal-content" id="fullImage"></div>
 
 <div class="order-bar">
-    <a href="tel:0501234567" class="order-link">
-        <span>להזמנות:</span>
-        <span>050-1234567</span>
-    </a>
+    <a href="tel:0501234567" class="order-link">להזמנות: 050-1234567</a>
 </div>
-
-<footer style="text-align:center; padding:20px; font-size:0.7rem; color:var(--text-muted); margin-bottom: 50px;">
-    © 2026 KOJI | Fine Japanese Dining | Yokne'am Illit
-</footer>
 
 <script>
     const REPO_OWNER = 'BigDadies-55';
     const REPO_NAME = 'NewRest';
     const FILE_PATH = 'menu_db.json';
+    const IMAGE_FOLDER = 'images';
 
-    let allItems = [];
-    let currentCategory = 'הכל';
+    let db = { categories: [], items: [] };
+    let currentCategory = '';
 
     async function loadData() {
-        const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}?v=${new Date().getTime()}`;
+        const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}?v=${Date.now()}`;
         try {
-            const response = await fetch(rawUrl);
-            allItems = await response.json();
-            updateFilters();
+            const res = await fetch(rawUrl);
+            const data = await res.json();
+            
+            if (Array.isArray(data)) {
+                db.items = data;
+                db.categories = [...new Set(data.map(i => i.category))];
+            } else {
+                db = data;
+            }
+
+            if (db.categories.length > 0) currentCategory = db.categories[0];
+            
+            renderFilters();
             renderItems();
-        } catch (error) { console.error("Error:", error); }
+        } catch (e) { console.error("Error loading menu:", e); }
     }
 
-    function updateFilters() {
+    function renderFilters() {
         const nav = document.getElementById('filter-nav');
-        const categories = ['הכל', 'ראשונות', 'עיקריות', 'קינוחים', 'שתייה'];
-        nav.innerHTML = categories.map(cat => {
-            const count = cat === 'הכל' ? allItems.length : allItems.filter(item => item.category === cat).length;
-            const activeClass = cat === currentCategory ? 'active' : '';
-            return `<button class="filter-btn ${activeClass}" onclick="filterMenu('${cat}', this)">${cat} <span class="count-badge">(${count})</span></button>`;
-        }).join('');
+        nav.innerHTML = db.categories.map(cat => `
+            <button class="filter-btn ${cat === currentCategory ? 'active' : ''}" 
+                    onclick="switchCat('${cat}', this)">${cat}</button>
+        `).join('');
     }
 
     function renderItems() {
         const display = document.getElementById('menu-display');
-        const filtered = currentCategory === 'הכל' ? allItems : allItems.filter(i => i.category === currentCategory);
+        const filtered = db.items.filter(i => i.category === currentCategory);
         
         display.innerHTML = filtered.map(item => {
-            let imgSrc = item.image;
-            if (imgSrc && !imgSrc.startsWith('http') && !imgSrc.startsWith('data:')) {
-                imgSrc = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/images/${imgSrc}`;
-            }
-
+            const imgSrc = item.image ? `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${IMAGE_FOLDER}/${item.image}` : '';
             return `
             <div class="card" onclick="openModal('${imgSrc}')">
-                <div class="img-wrapper">
-                    <img src="${imgSrc || 'https://via.placeholder.com/500x300'}" alt="${item.name}" loading="lazy">
-                </div>
+                <div class="img-wrapper"><img src="${imgSrc || 'https://via.placeholder.com/500x300'}" loading="lazy"></div>
                 <div class="card-content">
-                    <span class="category-tag">${item.category}</span>
                     <h3 class="card-title">${item.name}</h3>
-                    <p class="card-desc">${item.desc || 'מנת שף המורכבת מחומרי הגלם הטובים ביותר.'}</p>
+                    <p class="card-desc">${item.desc || ''}</p>
                     <div class="card-price">₪${item.price}</div>
                 </div>
             </div>`;
         }).join('');
     }
 
-    function filterMenu(category, btn) {
-        currentCategory = category;
+    function switchCat(cat, btn) {
+        currentCategory = cat;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         renderItems();
     }
 
     function openModal(src) {
-        if(!src || src === 'undefined' || src === 'null') return;
-        const modal = document.getElementById('imageModal');
-        const fullImg = document.getElementById('fullImage');
-        fullImg.src = src;
-        modal.classList.add('show');
+        if(!src) return;
+        document.getElementById('fullImage').src = src;
+        document.getElementById('imageModal').classList.add('show');
     }
 
     function closeModal() { document.getElementById('imageModal').classList.remove('show'); }
 
     loadData();
 </script>
-
 </body>
 </html>
