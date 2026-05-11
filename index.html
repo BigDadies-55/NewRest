@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOJI - Japanese Art Dining</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c9a35d;
@@ -18,7 +20,7 @@
             --border: #2a2620;
         }
         body { 
-            font-family: 'Assistant', sans-serif; 
+            font-family: 'Heebo', sans-serif; 
             background: var(--bg);
             background-image: 
                 radial-gradient(ellipse at top, rgba(201, 163, 93, 0.05) 0%, transparent 50%),
@@ -29,7 +31,7 @@
         }
         
         header { 
-            padding: 28px 15px 22px; 
+            padding: 24px 30px; 
             background: 
                 radial-gradient(ellipse at center top, rgba(255, 240, 215, 0.2) 0%, transparent 70%),
                 linear-gradient(180deg, #b89868 0%, #c9a878 50%, #b89868 100%);
@@ -42,15 +44,56 @@
             width: 100px; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(58, 45, 24, 0.6), transparent);
         }
-        .logo-img { height: 95px; margin-bottom: 10px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25)); }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        .header-text {
+            text-align: right;
+            flex: 1;
+            min-width: 0;
+        }
+        .header-right-group {
+            display: flex;
+            align-items: flex-end;
+            gap: 32px;
+            flex-shrink: 0;
+        }
+        .logo-link {
+            display: block;
+            cursor: pointer;
+            transition: 0.3s ease;
+            text-decoration: none;
+        }
+        .logo-link:hover { transform: scale(1.05); }
+        .logo-link:active { transform: scale(0.97); }
+        .logo-img { 
+            height: 130px; 
+            display: block;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+        }
         .main-title { 
-            font-family: 'Cinzel', serif; margin: 0; font-size: 1.9rem; letter-spacing: 5px; 
+            font-family: 'Cormorant Garamond', serif; margin: 0; 
+            font-size: 2.8rem; letter-spacing: 9px; 
+            font-weight: 600;
             color: #2a1f0f; 
             text-shadow: 0 1px 0 rgba(255, 240, 215, 0.25);
+            line-height: 1;
         }
         .address-text { 
-            font-size: 0.85rem; color: #4a3a20; margin-top: 6px; 
-            font-weight: 400; letter-spacing: 1.2px;
+            font-size: 1.1rem; 
+            color: #2a1f0f; 
+            margin: 0 0 -10px 0; 
+            font-weight: 500; 
+            letter-spacing: 1.2px;
+            text-align: right;
+            line-height: 1.4;
+            max-width: 180px;
+            text-shadow: 0 1px 0 rgba(255, 240, 215, 0.2);
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
@@ -67,7 +110,7 @@
             margin-bottom: 15px; opacity: 0.8;
         }
         .home-intro-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
             letter-spacing: 6px;
             color: var(--text);
@@ -183,9 +226,10 @@
         .tile-corner-br { bottom: 20px; left: 20px; border-bottom: 1px solid; border-left: 1px solid; }
 
         .tile-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.9rem;
-            letter-spacing: 5px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            letter-spacing: 6px;
+            font-weight: 600;
             color: var(--gold-light);
             margin: 0 0 15px;
             text-shadow: 
@@ -255,7 +299,8 @@
             opacity: 0.4;
         }
         .page-title {
-            font-family: 'Cinzel', serif; font-size: 2.8rem; letter-spacing: 8px;
+            font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; letter-spacing: 10px;
+            font-weight: 600;
             color: var(--gold); margin: 0; text-shadow: 0 0 30px rgba(201, 163, 93, 0.3);
             text-transform: uppercase;
         }
@@ -306,29 +351,37 @@
             border-radius: 4px; color: var(--gold-light); font-weight: 700; 
             border: 1px solid rgba(201, 163, 93, 0.3); letter-spacing: 0.5px;
         }
-        .card-name { font-family: 'Cinzel', serif; margin: 8px 0; font-size: 1.15rem; color: var(--text); letter-spacing: 1px; }
+        .card-name { font-family: 'Cormorant Garamond', serif; margin: 8px 0; font-size: 1.35rem; color: var(--text); letter-spacing: 1.5px; font-weight: 600; }
         .card-desc { font-size: 0.85rem; color: var(--text-muted); margin: 5px 0 15px 0; line-height: 1.5; height: 2.8em; overflow: hidden; }
         .price { 
             font-weight: 700; font-size: 1.2rem; margin-top: auto; padding-top: 12px; 
-            border-top: 1px dashed var(--border); color: var(--gold); font-family: 'Cinzel', serif;
+            border-top: 1px dashed var(--border); color: var(--gold); font-family: 'Cormorant Garamond', serif;
         }
 
         .floating-actions {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 12px; z-index: 100;
-            background: rgba(20, 20, 20, 0.95); padding: 10px 20px; border-radius: 50px;
+            display: flex; gap: 8px; z-index: 100;
+            background: rgba(20, 20, 20, 0.95); padding: 8px 12px; border-radius: 50px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 20px rgba(201, 163, 93, 0.1);
-            backdrop-filter: blur(15px); border: 1px solid rgba(201, 163, 93, 0.25); width: max-content;
+            backdrop-filter: blur(15px); border: 1px solid rgba(201, 163, 93, 0.25); 
+            max-width: calc(100vw - 30px);
         }
         .action-btn { 
-            text-decoration: none; font-weight: 600; font-size: 0.9rem; 
-            display: flex; align-items: center; gap: 8px; padding: 10px 20px; 
+            text-decoration: none; font-weight: 600; font-size: 0.85rem; 
+            display: flex; align-items: center; gap: 6px; padding: 9px 16px; 
             border-radius: 30px; transition: 0.3s; letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         .btn-order-float { 
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); 
             color: #000; box-shadow: 0 4px 15px rgba(201, 163, 93, 0.3);
         }
+        .btn-map-float {
+            background: rgba(201, 163, 93, 0.15);
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 163, 93, 0.5);
+        }
+        .btn-map-float:hover { background: rgba(201, 163, 93, 0.25); color: var(--gold); }
         .btn-phone-float { background: transparent; color: var(--gold-light); border: 1px solid rgba(201, 163, 93, 0.4); }
         .btn-phone-float:hover { background: rgba(201, 163, 93, 0.1); }
         .action-btn:active { transform: scale(0.95); }
@@ -405,8 +458,9 @@
             border: 1px solid rgba(201, 163, 93, 0.4); letter-spacing: 1px;
         }
         .modal-name {
-            font-family: 'Cinzel', serif; font-size: 2.2rem; margin: 10px 0 5px;
-            letter-spacing: 3px; color: var(--gold); text-shadow: 0 0 30px rgba(201, 163, 93, 0.3);
+            font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; margin: 10px 0 5px;
+            letter-spacing: 4px; font-weight: 600;
+            color: var(--gold); text-shadow: 0 0 30px rgba(201, 163, 93, 0.3);
         }
         .modal-divider { display: flex; align-items: center; justify-content: center; margin: 20px auto; gap: 12px; }
         .modal-divider::before, .modal-divider::after {
@@ -426,8 +480,8 @@
         }
         .modal-price-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
         .modal-price {
-            font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 700;
-            color: var(--gold); letter-spacing: 2px; text-shadow: 0 0 20px rgba(201, 163, 93, 0.3);
+            font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700;
+            color: var(--gold); letter-spacing: 3px; text-shadow: 0 0 20px rgba(201, 163, 93, 0.3);
         }
 
         .image-zoom { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 3000; justify-content: center; align-items: center; cursor: zoom-out; }
@@ -435,10 +489,15 @@
         .image-zoom img { max-width: 95%; max-height: 90vh; border-radius: 8px; border: 1px solid rgba(201, 163, 93, 0.3); }
 
         @media (max-width: 600px) {
-            header { padding: 22px 15px 18px; }
-            .logo-img { height: 75px; margin-bottom: 8px; }
-            .main-title { font-size: 1.5rem; letter-spacing: 4px; }
-            .address-text { font-size: 0.8rem; }
+            header { padding: 18px 18px; }
+            .header-content { gap: 14px; }
+            .header-right-group { gap: 20px; }
+            .logo-img { height: 85px; }
+            .main-title { font-size: 1.7rem; letter-spacing: 5px; }
+            .address-text { 
+                font-size: 0.85rem; letter-spacing: 0.8px; 
+                margin-bottom: -6px; max-width: 130px;
+            }
             .tile-name { font-size: 1.4rem; letter-spacing: 3px; }
             .category-tile { padding: 40px 20px; min-height: 180px; }
             .page-title { font-size: 1.9rem; letter-spacing: 5px; }
@@ -447,15 +506,30 @@
             .modal-price { font-size: 2rem; }
             .modal-img-wrap { height: 50vh; min-height: 280px; }
             .modal-body { padding: 20px 18px 40px; }
+            .floating-actions { gap: 6px; padding: 7px 10px; }
+            .action-btn { font-size: 0.78rem; padding: 8px 12px; gap: 4px; }
+        }
+        @media (max-width: 380px) {
+            .logo-img { height: 70px; }
+            .main-title { font-size: 1.4rem; letter-spacing: 4px; }
+            .address-text { font-size: 0.75rem; max-width: 110px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <img id="mainLogo" src="" class="logo-img">
-    <h1 id="mainTitle" class="main-title"></h1>
-    <div id="mainAddress" class="address-text"></div>
+    <div class="header-content">
+        <div class="header-text">
+            <h1 id="mainTitle" class="main-title"></h1>
+        </div>
+        <div class="header-right-group">
+            <div id="mainAddress" class="address-text"></div>
+            <a href="#" onclick="renderHome(); return false;" class="logo-link" aria-label="חזרה לדף הבית">
+                <img id="mainLogo" src="" class="logo-img">
+            </a>
+        </div>
+    </div>
 </header>
 
 <div class="container">
@@ -509,7 +583,8 @@
             
             let barHtml = "";
             if (db.settings.phone) barHtml += `<a href="tel:${db.settings.phone}" class="action-btn btn-phone-float">📞 התקשרו</a>`;
-            if (db.settings.orderLink) barHtml += `<a href="${db.settings.orderLink}" target="_blank" class="action-btn btn-order-float">🛵 הזמנה אונליין</a>`;
+            if (db.settings.mapLink) barHtml += `<a href="${db.settings.mapLink}" target="_blank" class="action-btn btn-map-float">📍 נווט</a>`;
+            if (db.settings.orderLink) barHtml += `<a href="${db.settings.orderLink}" target="_blank" class="action-btn btn-order-float">🛵 הזמנה</a>`;
             document.getElementById('floating-bar').innerHTML = barHtml;
 
             renderHome();
