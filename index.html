@@ -29,7 +29,7 @@
         }
         
         header { 
-            padding: 55px 15px 35px; 
+            padding: 28px 15px 22px; 
             background: 
                 radial-gradient(ellipse at center top, rgba(255, 240, 215, 0.2) 0%, transparent 70%),
                 linear-gradient(180deg, #b89868 0%, #c9a878 50%, #b89868 100%);
@@ -42,15 +42,15 @@
             width: 100px; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(58, 45, 24, 0.6), transparent);
         }
-        .logo-img { height: 140px; margin-bottom: 18px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25)); }
+        .logo-img { height: 95px; margin-bottom: 10px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25)); }
         .main-title { 
-            font-family: 'Cinzel', serif; margin: 0; font-size: 2.6rem; letter-spacing: 6px; 
+            font-family: 'Cinzel', serif; margin: 0; font-size: 1.9rem; letter-spacing: 5px; 
             color: #2a1f0f; 
             text-shadow: 0 1px 0 rgba(255, 240, 215, 0.25);
         }
         .address-text { 
-            font-size: 1rem; color: #4a3a20; margin-top: 12px; 
-            font-weight: 400; letter-spacing: 1.5px;
+            font-size: 0.85rem; color: #4a3a20; margin-top: 6px; 
+            font-weight: 400; letter-spacing: 1.2px;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
@@ -435,11 +435,10 @@
         .image-zoom img { max-width: 95%; max-height: 90vh; border-radius: 8px; border: 1px solid rgba(201, 163, 93, 0.3); }
 
         @media (max-width: 600px) {
-            header { padding: 40px 15px 28px; }
-            .logo-img { height: 110px; margin-bottom: 14px; }
-            .main-title { font-size: 2.1rem; letter-spacing: 5px; }
-            .address-text { font-size: 0.9rem; }
-            .home-intro-title { font-size: 1.7rem; letter-spacing: 4px; }
+            header { padding: 22px 15px 18px; }
+            .logo-img { height: 75px; margin-bottom: 8px; }
+            .main-title { font-size: 1.5rem; letter-spacing: 4px; }
+            .address-text { font-size: 0.8rem; }
             .tile-name { font-size: 1.4rem; letter-spacing: 3px; }
             .category-tile { padding: 40px 20px; min-height: 180px; }
             .page-title { font-size: 1.9rem; letter-spacing: 5px; }
@@ -550,11 +549,7 @@
         }).join('');
 
         document.getElementById('view-display').innerHTML = `
-            <div class="home-intro">
-                <div class="home-intro-label">תפריט</div>
-                <h2 class="home-intro-title">בחרו קטגוריה</h2>
-                <div class="home-intro-ornament"><span>◆</span></div>
-            </div>
+            <div style="height: 30px;"></div>
             <div class="categories-grid">${tilesHtml}</div>
         `;
     }
